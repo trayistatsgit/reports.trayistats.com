@@ -5,18 +5,22 @@ import dashboardImage from '../../assets/images/TS Dashboard Image.png';
 
 const Sidebar = () => {
   return (
-    <div className="w-1/5 bg-white p-4">
-      <div className="text-2xl font-bold mb-8">
-        <img src={mainLogo} alt="Trayistats Logo" className="w-[60px] h-[50px] ml-20" />
+    <div className="w-[20%] min-h-screen bg-white p-6 flex flex-col justify-between">
+      {/* Logo Section */}
+      <div className="flex flex-col items-center">
+        <img src={mainLogo} alt="Trayistats Logo" className="w-16 h-auto mb-8" />
       </div>
-      <div className='border bg-[#F8F8F8] rounded-xl'>
-        <ul className="space-y-2">
-          {/* Using NavLink for navigation */}
+
+      {/* Navigation Links */}
+      <div className="flex-1">
+        <ul className="space-y-4">
           <li>
             <NavLink
               to="/"
               className={({ isActive }) => 
-                isActive ? 'text-lg font-semibold bg-gray-300 p-2 w-full text-left' : 'text-lg font-semibold hover:bg-gray-200 p-2 w-full text-left'
+                isActive
+                  ? 'text-lg font-semibold bg-purple-100 text-purple-800 p-3 rounded-md block transition duration-300'
+                  : 'text-lg font-semibold hover:bg-gray-200 p-3 rounded-md block transition duration-300'
               }
             >
               Dashboard
@@ -26,7 +30,9 @@ const Sidebar = () => {
             <NavLink
               to="/customerReports"
               className={({ isActive }) => 
-                isActive ? 'text-lg font-semibold bg-gray-300 p-2 w-full text-left' : 'text-lg font-semibold hover:bg-gray-200 p-2 w-full text-left'
+                isActive
+                  ? 'text-lg font-semibold bg-purple-100 text-purple-800 p-3 rounded-md block transition duration-300'
+                  : 'text-lg font-semibold hover:bg-gray-200 p-3 rounded-md block transition duration-300'
               }
             >
               Customer
@@ -36,7 +42,9 @@ const Sidebar = () => {
             <NavLink
               to="/supplierReports"
               className={({ isActive }) => 
-                isActive ? 'text-lg font-semibold bg-gray-300 p-2 w-full text-left' : 'text-lg font-semibold hover:bg-gray-200 p-2 w-full text-left'
+                isActive
+                  ? 'text-lg font-semibold bg-purple-100 text-purple-800 p-3 rounded-md block transition duration-300'
+                  : 'text-lg font-semibold hover:bg-gray-200 p-3 rounded-md block transition duration-300'
               }
             >
               Supplier
@@ -46,16 +54,20 @@ const Sidebar = () => {
             <NavLink
               to="/trayistatsReports"
               className={({ isActive }) => 
-                isActive ? 'text-lg font-semibold bg-gray-300 p-2 w-full text-left' : 'text-lg font-semibold hover:bg-gray-200 p-2 w-full text-left'
+                isActive
+                  ? 'text-lg font-semibold bg-purple-100 text-purple-800 p-3 rounded-md block transition duration-300'
+                  : 'text-lg font-semibold hover:bg-gray-200 p-3 rounded-md block transition duration-300'
               }
             >
               Trayistats Report
             </NavLink>
           </li>
         </ul>
-        <div className="text-2xl font-bold mb-8">
-          <img src={dashboardImage} alt="Trayistats Logo" className="mt-20" />
-        </div>
+      </div>
+
+      {/* Dashboard Image */}
+      <div className="flex flex-col items-center mt-10">
+        <img src={dashboardImage} alt="Trayistats Dashboard" className="w-[200px] h-auto mt-8" />
       </div>
     </div>
   );

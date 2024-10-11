@@ -18,7 +18,7 @@ const MonthlyRevenueChart = ({ monthWiseRevenue }) => {
 
   // Data configuration for the line chart
   const data = {
-    labels: months, // Months will appear at the bottom of the chart
+    labels: months,
     datasets: [
       {
         label: 'Revenue',
@@ -26,13 +26,14 @@ const MonthlyRevenueChart = ({ monthWiseRevenue }) => {
         fill: true,
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
         borderColor: 'rgba(54, 162, 235, 1)',
-        tension: 0.4, // Smooth curve effect
+        tension: 0.4,
       },
     ],
   };
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false, // Important for full size
     plugins: {
       legend: {
         display: false,
@@ -66,9 +67,11 @@ const MonthlyRevenueChart = ({ monthWiseRevenue }) => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
+    <div className="bg-white p-6 rounded-lg shadow-md h-full"> {/* Ensure the parent has full height */}
       <h3 className="text-lg font-bold mb-4">Monthly Revenue</h3>
-      <Line data={data} options={options} />
+      <div className="h-64"> {/* Set a specific height for the chart */}
+        <Line data={data} options={options} />
+      </div>
     </div>
   );
 };

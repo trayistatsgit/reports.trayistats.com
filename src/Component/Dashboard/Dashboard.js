@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCurrentDashboardData, fetchMonthWiseRevenue, fetchWeeklyRevenue } from '../../Slice/dashboardSlice';
-import DashboardCards from '../Dashboard/DashboardCards';
-import WeeklyRevenueChart from '../Dashboard/WeeklyRevenueChart';
-import MonthlyRevenueChart from '../Dashboard/MonthlyRevenueChart';
-import Sidebar from '../../Component/Dashboard/Sidebar';
+
+const DashboardCards = React.lazy(() => import('../Dashboard/DashboardCards'));
+const WeeklyRevenueChart = React.lazy(() => import('../Dashboard/WeeklyRevenueChart'));
+const MonthlyRevenueChart = React.lazy(() => import('../Dashboard/MonthlyRevenueChart'));
 
 const Dashboard = () => {
   const dispatch = useDispatch();
 
-  // Fetching data from Redux store
   const currentDashboardData = useSelector((state) => state.dashboard.currentDashboardData);
   const monthWiseRevenue = useSelector((state) => state.dashboard.monthWiseRevenue);
   const weeklyRevenue = useSelector((state) => state.dashboard.weeklyRevenue);
@@ -23,65 +22,50 @@ const Dashboard = () => {
   }, [dispatch]);
 
   if (status === 'loading') {
-    return <div>Loading...</div>;
+    return <div className="flex justify-center items-center h-screen">Loading...</div>;
   }
 
   if (status === 'failed') {
-    return <div>Error: {error}</div>;
+    return <div className="flex justify-center items-center h-screen">Error: {error}</div>;
   }
 
-  // Extracting data from the API response
   const dashboardRecord = currentDashboardData.Records?.[0] || {};
   const monthWiseRevenueData = monthWiseRevenue.Records || [];
   const weeklyRevenueData = weeklyRevenue.Records?.[0] || {};
 
   return (
     <div className="flex h-screen">
-      {/* Sidebar */}
-      <Sidebar />
-
-      {/* Main Content */}
-      <div className="flex-1 p-6 space-y-6">
+      {/* Main content area */}
+      <div className="flex-1 p-6 space-y-8 bg-gray-50">
         {/* Top Bar */}
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex items-center space-x-4">
-            <input
-              type="text"
-              placeholder="Search"
-              className="border border-gray-300 rounded-lg p-2 text-sm focus:outline-none"
-            />
-            {/* <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center">M</div>
-              <div>
-                <p className="text-sm">Myra</p>
-              </div>
-            </div> */}
+        <div className="flex justify-between items-center mb-6">
+          {/* Search bar */}
+          <div className="w-full">
+            <h className="text-3xl font-semibold mb-4">Trayistats Reports</h>
           </div>
         </div>
 
         {/* Dashboard Cards */}
-        <div className="">
+        <Suspense fallback={<div className="text-center">Loading dashboard cards...</div>}>
           <DashboardCards
             totalParticipants={dashboardRecord.TotalParticipants || 0}
             completedParticipants={dashboardRecord.CompletedParticipants || 0}
             totalRevenue={dashboardRecord.TotalRevenue || 0}
             conversionRate={dashboardRecord.ConversionRate || 0}
           />
-        </div>
+        </Suspense>
 
-        {/* Charts */}
-        <div className="grid grid-cols-2 gap-4">
+        {/* Charts Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Monthly Revenue Chart */}
-          <div className="">
-            {/* <h3 className="text-lg font-bold mb-4">6 months survey</h3> */}
+          <Suspense fallback={<div className="text-center">Loading monthly revenue chart...</div>}>
             <MonthlyRevenueChart monthWiseRevenue={monthWiseRevenueData} />
-          </div>
+          </Suspense>
 
           {/* Weekly Revenue Chart */}
-          <div className="">
-            {/* <h3 className="text-lg font-bold mb-4">Total Revenue</h3> */}
+          <Suspense fallback={<div className="text-center">Loading weekly revenue chart...</div>}>
             <WeeklyRevenueChart weeklyRevenue={weeklyRevenueData} />
-          </div>
+          </Suspense>
         </div>
       </div>
     </div>

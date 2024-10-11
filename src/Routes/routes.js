@@ -1,3 +1,4 @@
+// AppRoutes.js
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Dashboard from '../Component/Dashboard/Dashboard';
