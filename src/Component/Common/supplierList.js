@@ -27,7 +27,7 @@ const SupplierDropdown = () => {
   return (
     <div>
       <select className="border border-gray-300 rounded-lg p-2 text-sm focus:outline-none w-full">
-        <option value="">Select a supplier</option>
+        <option value="">Select Supplier</option>
         {supplierRecords.map((supplier) => (
           <option key={supplier.Name} value={supplier.Name}>
             {supplier.Name}
