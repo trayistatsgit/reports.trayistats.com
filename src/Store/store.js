@@ -1,14 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
-import dashboardReducer from '../Slice/dashboardSlice'; // Import dashboard reducer
-import supplierReducer from '../Slice/supplierSlice';   // Import supplier reducer
-import customerReducer from '../Slice/customerSlice';   // Import supplier reducer
+import dashboardReducer from '../Slice/dashboardSlice';
+import supplierReducer from '../Slice/supplierSlice';
+import customerReducer from '../Slice/customerSlice';
 import supplierReconciliationReducer from '../Slice/supplierReconciliationSlice';
 
 export const store = configureStore({
   reducer: {
-    dashboard: dashboardReducer, // Register dashboard slice
-    supplier: supplierReducer,   // Register supplier slice
-    customer: customerReducer,   // Register supplier slice
+    dashboard: dashboardReducer, 
+    supplier: supplierReducer,
+    customer: customerReducer,
     supplierReconciliation: supplierReconciliationReducer,
   },
 });

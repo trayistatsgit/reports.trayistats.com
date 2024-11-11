@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// Thunk to fetch all suppliers
 export const fetchAllSuppliers = createAsyncThunk(
   'supplier/fetchAllSuppliers',
   async () => {
@@ -13,7 +12,7 @@ export const fetchAllSuppliers = createAsyncThunk(
 const supplierSlice = createSlice({
   name: 'supplier',
   initialState: {
-    suppliers: [], // Initialize as an array
+    suppliers: [],
     status: 'idle',
     error: null,
   },
@@ -25,7 +24,7 @@ const supplierSlice = createSlice({
       })
       .addCase(fetchAllSuppliers.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.suppliers = action.payload; // Store fetched suppliers here
+        state.suppliers = action.payload;
       })
       .addCase(fetchAllSuppliers.rejected, (state, action) => {
         state.status = 'failed';
