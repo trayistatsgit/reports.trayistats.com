@@ -1,9 +1,17 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom'; // Import NavLink for navigation
+import { NavLink, useLocation } from 'react-router-dom'; // Import useLocation for route check
 import mainLogo from '../../assets/images/mainLogo.png';
 import dashboardImage from '../../assets/images/TS Dashboard Image.png';
 
 const Sidebar = () => {
+  // Get current location (URL path)
+  const location = useLocation();
+
+  // Don't show sidebar on login page or other specific pages
+  if (location.pathname === '/login' || location.pathname === '/signup') {
+    return null; // Return null to hide sidebar on login or signup page
+  }
+
   return (
     <div className="w-[20%] min-h-screen bg-white p-6 flex flex-col justify-between">
       {/* Logo Section */}
@@ -17,7 +25,7 @@ const Sidebar = () => {
           <li>
             <NavLink
               to="/"
-              className={({ isActive }) => 
+              className={({ isActive }) =>
                 isActive
                   ? 'text-lg font-semibold bg-purple-100 text-purple-800 p-3 rounded-md block transition duration-300'
                   : 'text-lg font-semibold hover:bg-gray-200 p-3 rounded-md block transition duration-300'
@@ -29,7 +37,7 @@ const Sidebar = () => {
           <li>
             <NavLink
               to="/customerReports"
-              className={({ isActive }) => 
+              className={({ isActive }) =>
                 isActive
                   ? 'text-lg font-semibold bg-purple-100 text-purple-800 p-3 rounded-md block transition duration-300'
                   : 'text-lg font-semibold hover:bg-gray-200 p-3 rounded-md block transition duration-300'
@@ -41,7 +49,7 @@ const Sidebar = () => {
           <li>
             <NavLink
               to="/supplierReports"
-              className={({ isActive }) => 
+              className={({ isActive }) =>
                 isActive
                   ? 'text-lg font-semibold bg-purple-100 text-purple-800 p-3 rounded-md block transition duration-300'
                   : 'text-lg font-semibold hover:bg-gray-200 p-3 rounded-md block transition duration-300'
@@ -53,7 +61,7 @@ const Sidebar = () => {
           <li>
             <NavLink
               to="/trayistatsReports"
-              className={({ isActive }) => 
+              className={({ isActive }) =>
                 isActive
                   ? 'text-lg font-semibold bg-purple-100 text-purple-800 p-3 rounded-md block transition duration-300'
                   : 'text-lg font-semibold hover:bg-gray-200 p-3 rounded-md block transition duration-300'
