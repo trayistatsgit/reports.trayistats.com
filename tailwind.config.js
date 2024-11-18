@@ -1,8 +1,12 @@
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'], // Adjust according to your project structure
-  darkMode: false, // or 'media' or 'class'
+  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+  darkMode: false, 
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        customPurple: '#483868',
+      },
+    },
   },
   variants: {
     extend: {},
