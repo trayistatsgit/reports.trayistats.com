@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllCustomers } from '../../Slice/customerSlice';
 
-const CustomerDropdown = () => {
+const CustomerDropdown = ({ onChange }) => {
   const dispatch = useDispatch();
 
   const customers = useSelector((state) => state.customer.customers);
@@ -21,12 +21,15 @@ const CustomerDropdown = () => {
     return <div>Error: {error}</div>;
   }
 
-  // Check if customers.Records is an array before mapping
+  // Ensure customers.Records is an array
   const customerRecords = customers.Records || [];
 
   return (
     <div>
-      <select className="border border-gray-300 rounded-lg p-2 text-sm focus:outline-none w-full">
+      <select
+        className="border border-gray-300 rounded-lg p-2 text-sm focus:outline-none w-full"
+        onChange={(e) => onChange(e.target.value)} // Trigger onChange when selection changes
+      >
         <option value="">Select Customer</option>
         {customerRecords.map((customer) => (
           <option key={customer.ClientName} value={customer.ClientName}>

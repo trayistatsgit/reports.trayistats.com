@@ -4,7 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { subDays } from 'date-fns';
 
 const DatePickerComponent = ({ onDateChange }) => {
-  const [selectedRange, setSelectedRange] = useState('Custom'); // Default to custom range
+  const [selectedRange, setSelectedRange] = useState('Custom');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
@@ -16,7 +16,8 @@ const DatePickerComponent = ({ onDateChange }) => {
     switch (range) {
       case 'Today':
         start = today;
-        end = today;
+        end = new Date(today);
+        end.setDate(today.getDate() + 1);
         break;
       case '1 Week':
         start = subDays(today, 7);
@@ -29,27 +30,30 @@ const DatePickerComponent = ({ onDateChange }) => {
       default:
         setStartDate(null);
         setEndDate(null);
+        onDateChange(null, null);
         return;
     }
     setStartDate(start);
     setEndDate(end);
-    onDateChange(start, end); // Notify parent component
+    onDateChange(start, end);
   };
 
-  // Handle custom date range change
   const handleCustomDateChange = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
     onDateChange(start, end);
-    setSelectedRange('Custom'); // Mark as custom when manually selected
+    setSelectedRange('Custom');
   };
 
   return (
     <div className="space-y-4">
-      {/* Dropdown for Predefined Date Filters */}
       <div className="flex items-center space-x-4">
+        <label htmlFor="date-range-selector" className="text-sm font-medium">
+          Select Range:
+        </label>
         <select
+          id="date-range-selector"
           value={selectedRange}
           onChange={(e) => handleRangeSelection(e.target.value)}
           className="border border-gray-300 p-2 rounded-lg"
@@ -59,17 +63,22 @@ const DatePickerComponent = ({ onDateChange }) => {
           <option value="1 Week">Last 1 Week</option>
           <option value="1 Month">Last 1 Month</option>
         </select>
+      </div>
 
-        {/* Custom Date Range Picker */}
+      <div className="flex items-center space-x-4">
+        <label htmlFor="custom-date-picker" className="text-sm font-medium">
+          Custom Range:
+        </label>
         <DatePicker
+          id="custom-date-picker"
           selected={startDate}
           onChange={handleCustomDateChange}
           startDate={startDate}
           endDate={endDate}
           selectsRange
           isClearable
-          maxDate={new Date()} // Disable future dates
-          monthsShown={2} // Show two months side by side
+          maxDate={new Date()} 
+          monthsShown={2} 
           className="border border-gray-300 p-2 rounded-lg"
           placeholderText="Start date  →  End date"
         />

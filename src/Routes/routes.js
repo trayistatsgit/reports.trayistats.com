@@ -10,11 +10,11 @@ import Login from '../Component/Login/Login';
 const AppRoutes = () => {
   return (
     <Routes>
+      <Route path="/login" element={<Login />} />
       <Route path="/" element={<Dashboard />} />
       <Route path="/customerReports" element={<CustomerReports />} />
       <Route path="/supplierReports" element={<SupplierReports />} />
       <Route path="/trayistatsReports" element={<TrayistatsReports />} />
-      <Route path="/login" element={<Login />} />
     </Routes>
   );
 };

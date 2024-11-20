@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllSuppliers } from '../../Slice/supplierSlice';
 
-const SupplierDropdown = () => {
+const SupplierDropdown = ({ onChange }) => {
   const dispatch = useDispatch();
 
   const suppliers = useSelector((state) => state.supplier.suppliers);
@@ -21,12 +21,15 @@ const SupplierDropdown = () => {
     return <div>Error: {error}</div>;
   }
 
-  // Check if suppliers.Records is an array before mapping
+  // Ensure suppliers.Records is an array
   const supplierRecords = suppliers.Records || [];
 
   return (
     <div>
-      <select className="border border-gray-300 rounded-lg p-2 text-sm focus:outline-none w-full">
+      <select
+        className="border border-gray-300 rounded-lg p-2 text-sm focus:outline-none w-full"
+        onChange={(e) => onChange(e.target.value)} // Call onChange prop when selection changes
+      >
         <option value="">Select Supplier</option>
         {supplierRecords.map((supplier) => (
           <option key={supplier.Name} value={supplier.Name}>

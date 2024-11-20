@@ -1,21 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Doughnut } from 'react-chartjs-2';
-import 'chart.js/auto'; // Automatically register chart.js components
-import { fetchSupplierReconciliationData } from '../../Slice/supplierReconciliationSlice'; // Import the slice action
+import 'chart.js/auto';
+import { fetchSupplierReconciliationData } from '../../Slice/supplierReconciliationSlice';
 
 const SupplierReconciliationChart = () => {
   const dispatch = useDispatch();
 
-  // Access the supplier reconciliation state from Redux store
   const { data, loading, error } = useSelector((state) => state.supplierReconciliation);
 
   useEffect(() => {
-    dispatch(fetchSupplierReconciliationData()); // Fetch the reconciliation data on component mount
+    dispatch(fetchSupplierReconciliationData()); 
   }, [dispatch]);
 
-  // Prepare chart data
-  const percentage = data?.ResponseData.Records[0]?.reconcile_percentage || 0; // Fallback to 0 if no data
+  const percentage = data?.ResponseData.Records[0]?.reconcile_percentage || 0; 
 
   const chartData = {
     labels: ['Filled', 'Remaining'],
@@ -23,26 +21,25 @@ const SupplierReconciliationChart = () => {
       {
         label: 'Completion Percentage',
         data: [percentage, 100 - percentage],
-        backgroundColor: ['#FFA500', '#E5E7EB'], // Orange and gray colors
-        borderWidth: 0, // No border
+        backgroundColor: ['#FFA500', '#E5E7EB'],
+        borderWidth: 0,
       },
     ],
   };
 
   const chartOptions = {
-    responsive: true, // Make the chart responsive
-    maintainAspectRatio: false, // Disable aspect ratio to customize size
-    circumference: 180, // Half doughnut
-    rotation: -90, // Start from the top
-    cutout: '80%', // Adjust to create a smaller doughnut hole
+    responsive: true,
+    maintainAspectRatio: false,
+    circumference: 180,
+    rotation: -90,
+    cutout: '80%',
     plugins: {
       legend: {
-        display: false, // Hide the legend
+        display: false,
       },
       tooltip: {
-        enabled: false, // Disable tooltips for simplicity
+        enabled: false,
       },
-      // Custom plugin to display percentage in the center
       centeredText: {
         id: 'centeredText',
         beforeDraw: (chart) => {
@@ -53,20 +50,18 @@ const SupplierReconciliationChart = () => {
           const centerY = (chartArea.top + chartArea.bottom) / 2;
 
           ctx.save();
-          ctx.font = 'bold 12px Arial'; // Smaller font size
-          ctx.fillStyle = '#000'; // Text color
+          ctx.font = 'bold 12px Arial';
+          ctx.fillStyle = '#000';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           
-          // Display the actual percentage value
-          ctx.fillText(`${percentage.toFixed(0)}%`, centerX, centerY); // Display percentage value
+          ctx.fillText(`${percentage.toFixed(0)}%`, centerX, centerY);
           ctx.restore();
         },
       },
     },
   };
 
-  // Render the component
   return (
     <div className="w-full mx-auto mt-6">
       {loading ? (
@@ -74,7 +69,7 @@ const SupplierReconciliationChart = () => {
       ) : error ? (
         <div>Error fetching data: {error}</div>
       ) : (
-        <div className="relative w-24 h-24 ml-[23.5rem] mx-auto"> {/* Small chart with fixed size */}
+        <div className="relative w-24 h-24 ml-[23.5rem] mx-auto">
           <h3 className="text-center text-sm font-bold">Reconciliation Last Month</h3>
           <Doughnut 
             data={chartData} 

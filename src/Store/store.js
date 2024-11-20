@@ -4,13 +4,17 @@ import supplierReducer from '../Slice/supplierSlice';
 import customerReducer from '../Slice/customerSlice';
 import supplierReconciliationReducer from '../Slice/supplierReconciliationSlice';
 import authReducer from '../Slice/loginslice';
+import languageReducer from '../Slice/languageSlice';
+import supplierDataReducer from '../Slice/supplierData';
 
 export const store = configureStore({
   reducer: {
-    dashboard: dashboardReducer, 
+    dashboard: dashboardReducer,
     supplier: supplierReducer,
     customer: customerReducer,
     supplierReconciliation: supplierReconciliationReducer,
-    auth: authReducer
+    auth: authReducer,
+    language: languageReducer,
+    supplierData: supplierDataReducer,
   },
 });
