@@ -5,10 +5,12 @@ import Dashboard from '../Component/Dashboard/Dashboard';
 import CustomerReports from '../Component/CustomerReports/CustomerReports';
 import SupplierReports from '../Component/SupplierReports/SupplierReports';
 import TrayistatsReports from '../Component/TrayistatsReports/TrayistatsReports';
+import Login from '../Component/Login/Login'; 
 
 const AppRoutes = () => {
   return (
     <Routes>
+      <Route path="/login" element={<Login />} />
       <Route path="/" element={<Dashboard />} />
       <Route path="/customerReports" element={<CustomerReports />} />
       <Route path="/supplierReports" element={<SupplierReports />} />
